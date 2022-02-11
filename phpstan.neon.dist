@@ -1,0 +1,13 @@
+parameters:
+	level: max
+
+	paths:
+		- src/
+		- tests/
+
+	tmpDir: .build/phpstan/
+
+	ignoreErrors:
+		-
+			message: '#Dynamic call to static method PHPUnit#'
+			path: tests

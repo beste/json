@@ -1,0 +1,54 @@
+{
+    "name": "beste/json",
+    "type": "library",
+    "description": "A simple JSON helper to decode and encode JSON",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jérôme Gamez",
+            "email": "jerome@gamez.name"
+        }
+    ],
+    "require": {
+        "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.13"
+    },
+    "autoload": {
+        "files": [
+            "src/Json.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Beste\\Json\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "install-tools": [
+            "composer update --working-dir=tools/phpstan",
+            "composer update --working-dir=tools/psalm"
+        ],
+        "clean": "rm -rf .build && mkdir .build",
+        "phpstan": "tools/phpstan/vendor/bin/phpstan analyse",
+        "phpunit": "vendor/bin/phpunit",
+        "psalm": "tools/psalm/vendor/bin/psalm",
+        "tests": [
+            "@phpstan",
+            "@psalm",
+            "@phpunit"
+        ]
+    },
+    "scripts-descriptions": {
+        "clean": "Recreates ",
+        "phpstan": "Runs static analysis with PHPStan",
+        "phpunit": "Runs tests with PHPUnit",
+        "psalm": "Runs static analysis with Psalm",
+        "tests": "Runs static analysis and test suites"
+    }
+}

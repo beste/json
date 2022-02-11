@@ -1,0 +1,78 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        php:
+          - "7.4"
+          - "8.0"
+          - "8.1"
+        dependencies:
+          - "lowest"
+          - "highest"
+
+    env:
+      extensions: ctype, dom, intl, json, mbstring, openssl, xml, zip, zlib
+      key: "cache-${{ matrix.php }}-${{ matrix.dependencies }}-v1" # can be any string, change to clear the extension cache.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup cache environment
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.extensions }}
+          key: ${{ env.key }}
+
+      - name: Cache extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-keys: ${{ steps.extcache.outputs.key }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ env.extensions }}
+          tools: composer, pecl
+          coverage: xdebug
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: "ramsey/composer-install@v2"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "${{ matrix.composer-options }}"
+
+      - name: Install tools
+        run: composer install-tools
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - name: Run PHPStan
+        run: composer phpstan
+
+      - name: Run Psalm
+        run: composer psalm -- --output-format=github
+
+      - name: Setup Problem Matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Run PHPUnit
+        run: vendor/bin/phpunit --testdox --coverage-text
