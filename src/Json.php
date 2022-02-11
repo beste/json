@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Beste;
 
-use InvalidArgumentException;
 use JsonException;
+use UnexpectedValueException;
 
 final class Json
 {
@@ -14,7 +14,7 @@ final class Json
     private const DECODE_DEFAULT = JSON_BIGINT_AS_STRING;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      *
      * @return mixed
      */
@@ -26,19 +26,19 @@ final class Json
         try {
             return json_decode($json, $forceArray, 512, $flags | self::DECODE_DEFAULT | JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new InvalidArgumentException($e->getMessage());
+            throw new UnexpectedValueException($e->getMessage());
         }
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      *
      * @return mixed
      */
     public static function decodeFile(string $path, bool $forceArray = null)
     {
         if (!is_readable($path)) {
-            throw new InvalidArgumentException("The file at '$path' does not exist");
+            throw new UnexpectedValueException("The file at '$path' does not exist");
         }
 
         return self::decode((string) file_get_contents($path), $forceArray);
@@ -47,7 +47,7 @@ final class Json
     /**
      * @param mixed $data
      *
-     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public static function encode($data, ?int $options = null): string
     {
@@ -56,14 +56,14 @@ final class Json
         try {
             return json_encode($data, $options | self::ENCODE_DEFAULT | JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new InvalidArgumentException($e->getMessage());
+            throw new UnexpectedValueException($e->getMessage());
         }
     }
 
     /**
      * @param mixed $value
      *
-     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      */
     public static function pretty($value, ?int $options = null): string
     {

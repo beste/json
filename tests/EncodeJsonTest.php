@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Beste\Json\Tests;
 
 use Beste\Json;
-use InvalidArgumentException;
+use UnexpectedValueException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,7 +28,7 @@ class EncodeJsonTest extends TestCase
     /** @test */
     public function it_rejects_invalid_resources(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(UnexpectedValueException::class);
 
         // The point is that resources cannot be encoded, not what's in the file :)
         Json::encode(fopen(__DIR__.'/valid.json', 'rb'));

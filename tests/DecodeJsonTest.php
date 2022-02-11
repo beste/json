@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Beste\Json\Tests;
 
 use Beste\Json;
-use InvalidArgumentException;
+use UnexpectedValueException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +16,7 @@ class DecodeJsonTest extends TestCase
     /** @test */
     public function it_rejects_invalid_json(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(UnexpectedValueException::class);
 
         Json::decode('{');
     }
@@ -58,7 +58,7 @@ class DecodeJsonTest extends TestCase
     {
         $path = __DIR__.'/non-existing.json';
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(UnexpectedValueException::class);
         assert(!file_exists($path));
 
         Json::decodeFile($path);
@@ -69,7 +69,7 @@ class DecodeJsonTest extends TestCase
     {
         $path = __DIR__.'/invalid.json';
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(UnexpectedValueException::class);
         assert(file_exists($path));
 
         $this->assertIsObject(Json::decodeFile($path));

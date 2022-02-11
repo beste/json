@@ -12,7 +12,7 @@ A simple helper to decode and encode JSON, including from files.
 
 ```php
 use Beste\Json;
-use InvalidArgumentException;
+use UnexpectedValueException;
 
 $object = Json::decode('{"key": "value"}');
 
@@ -25,10 +25,10 @@ $json = Json::encode($object);
 $prettyJson = Json::pretty($object);
 
 // When something goes wring while decoding/encoding,
-// an `InvalidArgumentException` is thrown
+// an `UnexpectedValueException` is thrown
 try {
     Json::decode('{]');
-} catch (InvalidArgumentException $e) {
+} catch (UnexpectedValueException $e) {
     // Handle error
 }
 ```
