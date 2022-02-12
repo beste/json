@@ -2,7 +2,7 @@
 
 [![Current version](https://img.shields.io/packagist/v/beste/json.svg?logo=composer)](https://packagist.org/packages/beste/json)
 [![Supported PHP version](https://img.shields.io/static/v1?logo=php&label=PHP&message=~7.4.0%20||%20~8.0.0%20||%20~8.1.0&color=777bb4)](https://packagist.org/packages/beste/json)
-[![Tests](https://github.com/beste/json-php/workflows/Tests/badge.svg)](https://github.com/beste/json-php/actions)
+[![Tests](https://github.com/beste/json/workflows/Tests/badge.svg)](https://github.com/beste/json/actions)
 [![Discord](https://img.shields.io/discord/807679292573220925.svg?color=7289da&logo=discord)](https://discord.gg/Yacm7unBsr)
 [![Sponsor](https://img.shields.io/static/v1?logo=GitHub&label=Sponsor&message=%E2%9D%A4&color=ff69b4)](https://github.com/sponsors/jeromegamez)
 
