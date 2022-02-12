@@ -2,6 +2,7 @@
     "name": "beste/json",
     "type": "library",
     "description": "A simple JSON helper to decode and encode JSON",
+    "keywords": ["json", "helper"],
     "license": "MIT",
     "authors": [
         {
