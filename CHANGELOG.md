@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+Dropped support for PHP <8.1
+
 ## [1.0.0] - 2022-02-12
 
 Initial release
