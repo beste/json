@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Beste\Json\Tests;
 
 use Beste\Json;
+use SplFileObject;
 use UnexpectedValueException;
 use PHPUnit\Framework\TestCase;
 
@@ -68,10 +69,33 @@ class DecodeJsonTest extends TestCase
     public function it_rejects_a_file_with_invalid_json(): void
     {
         $path = __DIR__.'/invalid.json';
-
-        $this->expectException(UnexpectedValueException::class);
         assert(file_exists($path));
 
-        $this->assertIsObject(Json::decodeFile($path));
+        $this->expectException(UnexpectedValueException::class);
+        Json::decodeFile($path);
+    }
+
+    /** @test */
+    public function it_rejects_a_directory(): void
+    {
+        $this->expectException(UnexpectedValueException::class);
+        Json::decodeFile(__DIR__);
+    }
+
+    /** @test */
+    public function it_resolves_links(): void
+    {
+        $path = __DIR__.'/valid.json';
+        $symlinkPath = __DIR__.'/'.__FUNCTION__.'.json';
+
+        try {
+            $this->assertNotFalse(symlink($path, $symlinkPath));
+            $this->assertTrue(is_link($symlinkPath));
+
+            $this->assertIsObject(Json::decodeFile($symlinkPath));
+        } finally {
+            unlink($symlinkPath);
+        }
+
     }
 }

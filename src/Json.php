@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Beste;
 
 use JsonException;
+use SplFileInfo;
+use SplFileObject;
+use Throwable;
 use UnexpectedValueException;
 
 final class Json
@@ -14,11 +17,11 @@ final class Json
     private const DECODE_DEFAULT = JSON_BIGINT_AS_STRING;
 
     /**
-     * @throws UnexpectedValueException
+     * param non-empty-string $json
      *
-     * @return mixed
+     * @throws UnexpectedValueException
      */
-    public static function decode(string $json, ?bool $forceArray = null)
+    public static function decode(string $json, ?bool $forceArray = null): mixed
     {
         $forceArray = $forceArray ?? false;
         $flags = $forceArray ? JSON_OBJECT_AS_ARRAY : 0;
@@ -31,25 +34,44 @@ final class Json
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @param non-empty-string $path
      *
-     * @return mixed
+     * @throws UnexpectedValueException
      */
-    public static function decodeFile(string $path, bool $forceArray = null)
+    public static function decodeFile(string $path, bool $forceArray = null): mixed
     {
-        if (!is_readable($path)) {
-            throw new UnexpectedValueException("The file at '$path' does not exist");
+        $fileInfo = new SplFileInfo($path);
+
+        if ($fileInfo->isLink() && $linkTarget = $fileInfo->getLinkTarget()) {
+            $fileInfo = new SplFileInfo($linkTarget);
         }
 
-        return self::decode((string) file_get_contents($path), $forceArray);
+        if (!$fileInfo->isFile()) {
+            throw new UnexpectedValueException("`$path` does not point to a file.");
+        }
+
+        if (!$fileInfo->isReadable()) {
+            throw new UnexpectedValueException("`$path` is not readable.");
+        }
+
+        $file = $fileInfo->openFile();
+        $contents = $file->fread($file->getSize());
+
+        if ($contents === false) {
+            throw new UnexpectedValueException("Unable to read contents of `$path`");
+        }
+
+        if ($contents === '') {
+            throw new UnexpectedValueException("The file at `$path` is empty");
+        }
+
+        return self::decode($contents, $forceArray);
     }
 
     /**
-     * @param mixed $data
-     *
      * @throws UnexpectedValueException
      */
-    public static function encode($data, ?int $options = null): string
+    public static function encode(mixed $data, ?int $options = null): string
     {
         $options = $options ?? 0;
 
@@ -61,11 +83,9 @@ final class Json
     }
 
     /**
-     * @param mixed $value
-     *
      * @throws UnexpectedValueException
      */
-    public static function pretty($value, ?int $options = null): string
+    public static function pretty(mixed $value, ?int $options = null): string
     {
         $options = $options ?? 0;
 

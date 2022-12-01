@@ -46,7 +46,7 @@
         ]
     },
     "scripts-descriptions": {
-        "clean": "Recreates ",
+        "clean": "Recreates the build/cache directory",
         "phpstan": "Runs static analysis with PHPStan",
         "phpunit": "Runs tests with PHPUnit",
         "psalm": "Runs static analysis with Psalm",
