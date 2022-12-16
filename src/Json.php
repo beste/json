@@ -40,29 +40,22 @@ final class Json
      */
     public static function decodeFile(string $path, bool $forceArray = null): mixed
     {
-        $fileInfo = new SplFileInfo($path);
-
-        if ($fileInfo->isLink() && $linkTarget = $fileInfo->getLinkTarget()) {
-            $fileInfo = new SplFileInfo($linkTarget);
+        if (!is_readable($path)) {
+            throw new UnexpectedValueException("The file at '$path' is not readable");
         }
 
-        if (!$fileInfo->isFile()) {
-            throw new UnexpectedValueException("`$path` does not point to a file.");
+        if (is_dir($path)) {
+            throw new UnexpectedValueException("'$path' points to a directory");
         }
 
-        if (!$fileInfo->isReadable()) {
-            throw new UnexpectedValueException("`$path` is not readable.");
-        }
-
-        $file = $fileInfo->openFile();
-        $contents = $file->fread($file->getSize());
+        $contents = file_get_contents($path);
 
         if ($contents === false) {
-            throw new UnexpectedValueException("Unable to read contents of `$path`");
+            throw new UnexpectedValueException("The file at '$path' is not readable");
         }
 
         if ($contents === '') {
-            throw new UnexpectedValueException("The file at `$path` is empty");
+            throw new UnexpectedValueException("The file at '$path' is empty");
         }
 
         return self::decode($contents, $forceArray);

@@ -96,6 +96,13 @@ class DecodeJsonTest extends TestCase
         } finally {
             unlink($symlinkPath);
         }
+    }
 
+    /** @test */
+    public function it_resolves_relative_links(): void
+    {
+        $path = __DIR__.'/symlinked/symlinked.json';
+
+        $this->assertIsObject(Json::decodeFile($path));
     }
 }
