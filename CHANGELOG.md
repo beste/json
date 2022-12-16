@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Fixed symlinks not being properly resolved
+
 ## [1.2.0] - 2022-12-01
 
 * Added more checks when decoding JSON Files
