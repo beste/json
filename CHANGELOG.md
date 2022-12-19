@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [1.2.1] - 2022-12-19
+
 * Fixed symlinks not being properly resolved
 
 ## [1.2.0] - 2022-12-01
