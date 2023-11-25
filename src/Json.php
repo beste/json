@@ -23,7 +23,7 @@ final class Json
      */
     public static function decode(string $json, ?bool $forceArray = null): mixed
     {
-        $forceArray = $forceArray ?? false;
+        $forceArray ??= false;
         $flags = $forceArray ? JSON_OBJECT_AS_ARRAY : 0;
 
         try {
@@ -66,7 +66,7 @@ final class Json
      */
     public static function encode(mixed $data, ?int $options = null): string
     {
-        $options = $options ?? 0;
+        $options ??= 0;
 
         try {
             return json_encode($data, $options | self::ENCODE_DEFAULT | JSON_THROW_ON_ERROR);
@@ -80,7 +80,7 @@ final class Json
      */
     public static function pretty(mixed $value, ?int $options = null): string
     {
-        $options = $options ?? 0;
+        $options ??= 0;
 
         return self::encode($value, $options | self::ENCODE_PRETTY);
     }
