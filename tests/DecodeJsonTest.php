@@ -26,13 +26,13 @@ class DecodeJsonTest extends TestCase
     #[Test]
     public function it_decodes_to_an_object_by_default(): void
     {
-        $this->assertIsObject(JSON::decode('{"foo": "bar"}'));
+        self::assertIsObject(JSON::decode('{"foo": "bar"}'));
     }
 
     #[Test]
     public function it_forces_an_array(): void
     {
-        $this->assertIsArray(JSON::decode('{"foo": "bar"}', true));
+        self::assertIsArray(JSON::decode('{"foo": "bar"}', true));
     }
 
     #[Test]
@@ -41,9 +41,9 @@ class DecodeJsonTest extends TestCase
         $object = JSON::decode('{"large": 9223372036854775808}');
         assert(is_object($object));
 
-        $this->assertObjectHasProperty('large', $object);
-        $this->assertIsString($object->large);
-        $this->assertSame('9223372036854775808', $object->large);
+        self::assertObjectHasProperty('large', $object);
+        self::assertIsString($object->large);
+        self::assertSame('9223372036854775808', $object->large);
     }
 
     #[Test]
@@ -52,7 +52,7 @@ class DecodeJsonTest extends TestCase
         $path = __DIR__.'/valid.json';
         assert(file_exists($path));
 
-        $this->assertIsObject(Json::decodeFile($path));
+        self::assertIsObject(Json::decodeFile($path));
     }
 
     #[Test]
@@ -60,7 +60,7 @@ class DecodeJsonTest extends TestCase
     {
         $path = __DIR__.'/non-existing.json';
 
-        $this->expectException(UnexpectedValueException::class);
+        self::expectException(UnexpectedValueException::class);
         assert(!file_exists($path));
 
         Json::decodeFile($path);
@@ -72,14 +72,14 @@ class DecodeJsonTest extends TestCase
         $path = __DIR__.'/invalid.json';
         assert(file_exists($path));
 
-        $this->expectException(UnexpectedValueException::class);
+        self::expectException(UnexpectedValueException::class);
         Json::decodeFile($path);
     }
 
     #[Test]
     public function it_rejects_a_directory(): void
     {
-        $this->expectException(UnexpectedValueException::class);
+        self::expectException(UnexpectedValueException::class);
         Json::decodeFile(__DIR__);
     }
 
@@ -90,10 +90,10 @@ class DecodeJsonTest extends TestCase
         $symlinkPath = __DIR__.'/'.__FUNCTION__.'.json';
 
         try {
-            $this->assertNotFalse(symlink($path, $symlinkPath));
-            $this->assertTrue(is_link($symlinkPath));
+            self::assertNotFalse(symlink($path, $symlinkPath));
+            self::assertTrue(is_link($symlinkPath));
 
-            $this->assertIsObject(Json::decodeFile($symlinkPath));
+            self::assertIsObject(Json::decodeFile($symlinkPath));
         } finally {
             unlink($symlinkPath);
         }
@@ -104,6 +104,6 @@ class DecodeJsonTest extends TestCase
     {
         $path = __DIR__.'/symlinked/symlinked.json';
 
-        $this->assertIsObject(Json::decodeFile($path));
+        self::assertIsObject(Json::decodeFile($path));
     }
 }
