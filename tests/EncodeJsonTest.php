@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Beste\Json\Tests;
 
 use Beste\Json;
+use PHPUnit\Framework\Attributes\Test;
 use UnexpectedValueException;
 use PHPUnit\Framework\TestCase;
 
@@ -13,19 +14,19 @@ use PHPUnit\Framework\TestCase;
  */
 class EncodeJsonTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_does_not_escape_slashes(): void
     {
         $this->assertSame('{"slash":"/"}', Json::encode(['slash' => '/']));
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_escape_unicode(): void
     {
         $this->assertSame('{"emoji":"🚀"}', Json::encode(['emoji' => '🚀']));
     }
 
-    /** @test */
+    #[Test]
     public function it_rejects_invalid_resources(): void
     {
         $this->expectException(UnexpectedValueException::class);
@@ -34,7 +35,7 @@ class EncodeJsonTest extends TestCase
         Json::encode(fopen(__DIR__.'/valid.json', 'rb'));
     }
 
-    /** @test */
+    #[Test]
     public function it_pretty_prints(): void
     {
         $expected = <<<'PRETTY'
