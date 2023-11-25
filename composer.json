@@ -15,6 +15,10 @@
         "ext-json": "*"
     },
     "require-dev": {
+        "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-phpunit": "^1.3",
+        "phpstan/phpstan-strict-rules": "^1.5",
         "phpunit/phpunit": "^10.4.2",
         "rector/rector": "^0.18.10"
     },
@@ -29,28 +33,20 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     },
     "scripts": {
-        "install-tools": [
-            "composer update --working-dir=tools/phpstan",
-            "composer update --working-dir=tools/psalm"
+        "analyse": [
+            "XDEBUG_MODE=off vendor/bin/phpstan"
         ],
-        "clean": "rm -rf .build && mkdir .build",
-        "phpstan": "tools/phpstan/vendor/bin/phpstan analyse",
-        "phpunit": "vendor/bin/phpunit",
-        "psalm": "tools/psalm/vendor/bin/psalm",
-        "tests": [
-            "@phpstan",
-            "@psalm",
-            "@phpunit"
-        ]
-    },
-    "scripts-descriptions": {
-        "clean": "Recreates the build/cache directory",
-        "phpstan": "Runs static analysis with PHPStan",
-        "phpunit": "Runs tests with PHPUnit",
-        "psalm": "Runs static analysis with Psalm",
-        "tests": "Runs static analysis and test suites"
+        "analyze": "@analyse",
+        "test": [
+            "@analyse",
+            "@test-units"
+        ],
+        "test-units": "vendor/bin/phpunit"
     }
 }

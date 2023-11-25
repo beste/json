@@ -42,5 +42,5 @@ composer require beste/json
 ## Running tests
 
 ```shell
-composer run tests
+composer test
 ```

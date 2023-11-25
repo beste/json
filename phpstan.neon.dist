@@ -1,13 +1,9 @@
 parameters:
-	level: max
+	level: 9
 
 	paths:
 		- src/
 		- tests/
 
-	tmpDir: .build/phpstan/
-
-	ignoreErrors:
-		-
-			message: '#Dynamic call to static method PHPUnit#'
-			path: tests
+includes:
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon

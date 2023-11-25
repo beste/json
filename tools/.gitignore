@@ -1,5 +1,0 @@
-phpstan/*
-!phpstan/composer.json
-
-psalm/*
-!psalm/composer.json

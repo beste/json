@@ -3,5 +3,4 @@
 /.gitattributes                 export-ignore
 /.gitignore                     export-ignore
 /phpstan.neon.dist              export-ignore
-/psalm.xml.dist                 export-ignore
 /rector.php                     export-ignore

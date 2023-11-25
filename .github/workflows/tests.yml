@@ -67,20 +67,8 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-      - name: Install tools
-        run: composer install-tools
-
-      - name: Setup problem matchers for PHP
-        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-
       - name: Run PHPStan
-        run: composer phpstan
-
-      - name: Run Psalm
-        run: composer psalm -- --output-format=github
-
-      - name: Setup Problem Matchers for PHPUnit
-        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+        run: vendor/bin/phpstan
 
       - name: Run PHPUnit
         run: vendor/bin/phpunit --testdox --coverage-text
