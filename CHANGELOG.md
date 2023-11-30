@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Restored support for PHP 8.1
+
 ## [1.3.0] - 2023-11-25
 
 * Added support for PHP 8.3, dropped support for PHP 8.1
