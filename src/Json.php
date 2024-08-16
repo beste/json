@@ -38,7 +38,7 @@ final class Json
      *
      * @throws UnexpectedValueException
      */
-    public static function decodeFile(string $path, bool $forceArray = null): mixed
+    public static function decodeFile(string $path, ?bool $forceArray = null): mixed
     {
         if (!is_readable($path)) {
             throw new UnexpectedValueException("The file at '$path' is not readable");
