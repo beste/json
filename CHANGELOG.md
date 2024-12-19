@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.5.0 - 2024-12-19
 
 * Remove requirement that a string must be non-empty
 
