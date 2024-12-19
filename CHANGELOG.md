@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+* Remove requirement that a string must be non-empty
+
 ## 1.5.0 - 2024-08-17
 
 * Added support for PHP 8.4
