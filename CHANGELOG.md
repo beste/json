@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.6.0 - 2025-04-07
+
 * Use conditional PHPStan return type to correctly type hint an array when using `JSON::decode()` and 
   `JSON::decodeFile()`
 
