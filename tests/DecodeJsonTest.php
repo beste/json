@@ -32,6 +32,7 @@ class DecodeJsonTest extends TestCase
     #[Test]
     public function it_forces_an_array(): void
     {
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertIsArray(JSON::decode('{"foo": "bar"}', true));
     }
 
