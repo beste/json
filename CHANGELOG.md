@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+* Use conditional PHPStan return type to correctly type hint an array when using `JSON::decode()` and 
+  `JSON::decodeFile()`
+
 ## 1.5.0 - 2024-12-19
 
 * Remove requirement that a string must be non-empty
