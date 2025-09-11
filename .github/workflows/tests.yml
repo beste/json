@@ -28,6 +28,10 @@ jobs:
           - "8.2"
           - "8.3"
           - "8.4"
+        include:
+          - php: "8.5"
+            composer-options: "--ignore-platform-reqs"
+            dependencies: "highest"
 
     env:
       extensions: json
