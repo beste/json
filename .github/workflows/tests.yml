@@ -28,9 +28,10 @@ jobs:
           - "8.2"
           - "8.3"
           - "8.4"
+          - "8.5"
         include:
-          - php: "8.5"
-            composer-options: "--ignore-platform-reqs"
+          - php: "8.6"
+            composer-options: "--ignore-platform-req=php+"
             dependencies: "highest"
 
     env:
@@ -67,6 +68,8 @@ jobs:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: "ramsey/composer-install@v4"
+        with:
+          composer-options: "${{ matrix.composer-options }}"
 
       - name: Setup Problem Matchers
         run: |
