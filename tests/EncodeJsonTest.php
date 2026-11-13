@@ -12,24 +12,24 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  */
-class EncodeJsonTest extends TestCase
+final class EncodeJsonTest extends TestCase
 {
     #[Test]
     public function it_does_not_escape_slashes(): void
     {
-        self::assertSame('{"slash":"/"}', Json::encode(['slash' => '/']));
+        $this->assertSame('{"slash":"/"}', Json::encode(['slash' => '/']));
     }
 
     #[Test]
     public function it_does_not_escape_unicode(): void
     {
-        self::assertSame('{"emoji":"🚀"}', Json::encode(['emoji' => '🚀']));
+        $this->assertSame('{"emoji":"🚀"}', Json::encode(['emoji' => '🚀']));
     }
 
     #[Test]
     public function it_rejects_invalid_resources(): void
     {
-        self::expectException(UnexpectedValueException::class);
+        $this->expectException(UnexpectedValueException::class);
 
         // The point is that resources cannot be encoded, not what's in the file :)
         Json::encode(fopen(__DIR__.'/valid.json', 'rb'));
@@ -44,6 +44,6 @@ class EncodeJsonTest extends TestCase
         }
         PRETTY;
 
-        self::assertSame($expected, Json::pretty(['pretty' => 'print']));
+        $this->assertSame($expected, Json::pretty(['pretty' => 'print']));
     }
 }
