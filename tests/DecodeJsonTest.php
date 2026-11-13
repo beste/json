@@ -26,20 +26,20 @@ class DecodeJsonTest extends TestCase
     #[Test]
     public function it_decodes_to_an_object_by_default(): void
     {
-        self::assertIsObject(JSON::decode('{"foo": "bar"}'));
+        self::assertIsObject(Json::decode('{"foo": "bar"}'));
     }
 
     #[Test]
     public function it_forces_an_array(): void
     {
         // @phpstan-ignore staticMethod.alreadyNarrowedType
-        self::assertIsArray(JSON::decode('{"foo": "bar"}', true));
+        self::assertIsArray(Json::decode('{"foo": "bar"}', true));
     }
 
     #[Test]
     public function it_decodes_large_integers_to_string(): void
     {
-        $object = JSON::decode('{"large": 9223372036854775808}');
+        $object = Json::decode('{"large": 9223372036854775808}');
         assert(is_object($object));
 
         self::assertObjectHasProperty('large', $object);
