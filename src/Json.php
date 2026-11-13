@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Beste;
 
 use JsonException;
-use SplFileInfo;
-use SplFileObject;
-use Throwable;
 use UnexpectedValueException;
 
 final class Json
