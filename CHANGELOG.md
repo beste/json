@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 1.8.0 - 2026-11-15
+
+* Added support for PHP 8.6
+
 ## 1.7.0 - 2025-09-12
 
 * Added support for PHP 8.5
