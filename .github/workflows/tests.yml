@@ -16,6 +16,9 @@ on:
       - 'composer.json'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     name: PHP ${{ matrix.php }}
@@ -38,6 +41,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup cache environment
         id: extcache
