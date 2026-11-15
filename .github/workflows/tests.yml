@@ -29,14 +29,11 @@ jobs:
           - "8.3"
           - "8.4"
           - "8.5"
-        include:
-          - php: "8.6"
-            composer-options: "--ignore-platform-req=php+"
-            dependencies: "highest"
+          - "8.6"
 
     env:
       extensions: json
-      key: "cache-${{ matrix.php }}-${{ matrix.dependencies }}-v2" # can be any string, change to clear the extension cache.
+      key: "cache-${{ matrix.php }}-v2" # can be any string, change to clear the extension cache.
 
     steps:
       - name: Checkout code
@@ -68,8 +65,6 @@ jobs:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: "ramsey/composer-install@v4"
-        with:
-          composer-options: "${{ matrix.composer-options }}"
 
       - name: Setup Problem Matchers
         run: |
